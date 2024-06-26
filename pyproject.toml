@@ -4,12 +4,18 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "fuel_bedrock"
-version = "0.0.1"
+version = "0.0.2"
 authors = [
     { name="Joe Small", email="jsmall@york.ie"}
 ]
 description = "Helper methods for interacting with AWS Bedrock foundational models"
 requires-python = ">=3.8"
+
+[tool.setuptools.package-data]
+"*" = ["*.yml"]
+
+[tool.setuptools.data-files]
+"data" = ["src/**/*.yml"]
 
 
 

@@ -1,7 +1,7 @@
 from ..common import BedrockInvocationParameters, ResponseBody
 
 from json import dumps
-from pydantic import BaseModel, Field, PositiveInt
+from pydantic import BaseModel, Field, PositiveInt, SerializeAsAny
 from typing import Annotated, List, Literal, Optional
 
 
@@ -52,7 +52,7 @@ class TextCompletionsBody(BaseModel):
 
 class TextCompletionsConfig(BedrockInvocationParameters):
     modelId: Literal['anthropic.claude-instant-v1', 'anthropic.claude-v2', 'anthropic.claude-v2:1']
-    body: TextCompletionsBody
+    body: SerializeAsAny[TextCompletionsBody]
 
     @property
     def body_payload(self):

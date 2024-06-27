@@ -27,7 +27,7 @@ class TextContent(MessageContent):
 
 class Message(BaseModel):
     role: str
-    content: List[MessageContent]
+    content: SerializeAsAny[List[MessageContent]]
 
 
 class MessagesBody(BaseModel):

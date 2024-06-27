@@ -33,7 +33,7 @@ class Message(BaseModel):
 class MessagesBody(BaseModel):
     anthropic_version: str = Field(default="bedrock-2023-05-31")
     max_tokens: Optional[Annotated[int, Field(int, ge=0, le=200_000)]] = 500
-    messages: List[Message]
+    messages: SerializeAsAny[List[Message]]
     system: Optional[str] = None
     stop_sequences: Optional[List[str]] = None
     temperature: Optional[Annotated[float, Field(strict=True, ge=0, le=1)]] = None
@@ -52,7 +52,7 @@ class TextCompletionsBody(BaseModel):
 
 class TextCompletionsConfig(BedrockInvocationParameters):
     modelId: Literal['anthropic.claude-instant-v1', 'anthropic.claude-v2', 'anthropic.claude-v2:1']
-    body: SerializeAsAny[TextCompletionsBody]
+    body: TextCompletionsBody
 
     @property
     def body_payload(self):

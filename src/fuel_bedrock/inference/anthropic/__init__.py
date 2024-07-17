@@ -1,4 +1,4 @@
-from ...clients import bedrock_runtime_client, get_bedrock_results
+from ...clients import bedrock_runtime_client, get_bedrock_results, get_token_counts_from_headers
 from ...models.inference.anthropic import MessagesConfig, TextCompletionsConfig, MessagesResponse, TextCompletionsResponse
 from ...models.inference.anthropic import MessagesBody, TextCompletionsBody
 from ...models.inference.anthropic import TextContent, ImageContent
@@ -14,8 +14,13 @@ def _invoke_messages(config: MessagesConfig) -> MessagesResponse:
         contentType=config.contentType
     )
     response_body = get_bedrock_results(response)
+    input_token_count, output_token_count = get_token_counts_from_headers(response)
 
-    return MessagesResponse(body=response_body)
+    return MessagesResponse(
+        body=response_body,
+        input_token_count=input_token_count,
+        output_token_count=output_token_count
+    )
 
 
 def _invoke_completions(config: TextCompletionsConfig) -> TextCompletionsResponse:
@@ -26,7 +31,13 @@ def _invoke_completions(config: TextCompletionsConfig) -> TextCompletionsRespons
 
     response_body = loads(response.get('body').read())
 
-    return TextCompletionsResponse(body=response_body)
+    input_token_count, output_token_count = get_token_counts_from_headers(response)
+
+    return TextCompletionsResponse(
+        body=response_body,
+        input_token_count=input_token_count,
+        output_token_count=output_token_count
+    )
 
 
 def invoke_claude(config: MessagesConfig | TextCompletionsConfig) -> MessagesResponse | TextCompletionsResponse:

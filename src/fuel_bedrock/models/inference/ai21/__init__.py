@@ -30,7 +30,7 @@ class TextGenerationBody(BaseModel):
     temperature: Optional[Annotated[float, Field(strict=True, ge=0, le=1)]] = None
     topP: Optional[Annotated[float, Field(strict=True, ge=0, le=1)]] = None
     maxTokens: Optional[Annotated[int, Field(strict=True, ge=0, le=8_191)]] = None
-    stopSequences: List[str] = None
+    stopSequences: Optional[List[str]] = None
     countPenalty: Optional[CountPenalty] = None
     presencePenalty: Optional[PresencePenalty] = None
     frequencyPenalty: Optional[FrequencyPenalty] = None

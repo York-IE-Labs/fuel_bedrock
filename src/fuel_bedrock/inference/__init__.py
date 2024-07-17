@@ -39,9 +39,9 @@ def invoke_llm(config: BedrockInvocationParameters) -> ResponseBody:
     return fct(config)
 
 
-def generate_text(config: BedrockInvocationParameters) -> str:
+def generate_text(config: BedrockInvocationParameters) -> ResponseBody:
     response = invoke_llm(config)
-    return response.get_result()
+    return response
 
 
 
